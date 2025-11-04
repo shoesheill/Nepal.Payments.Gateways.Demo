@@ -1,0 +1,21 @@
+name: "payments"
+
+services:
+  app:
+    image: ghcr.io/shoesheill/nepal.payments.gateways.demo:latest
+    container_name: payments-app-demo
+    ports:
+      - "5000:8080"
+    volumes:
+      - ./appsettings.json:/app/appsettings.json:ro
+      - ./DataProtection-Keys:/root/.aspnet/DataProtection-Keys
+    networks:
+     - shared-net
+    restart: always
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Production"
+    restart: unless-stopped
+
+networks:
+  shared-net:
+   external: true
