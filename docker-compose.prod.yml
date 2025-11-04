@@ -14,8 +14,7 @@ services:
     restart: always
     environment:
       ASPNETCORE_ENVIRONMENT: "Production"
-    restart: unless-stopped
-
+      
 networks:
   shared-net:
    external: true
