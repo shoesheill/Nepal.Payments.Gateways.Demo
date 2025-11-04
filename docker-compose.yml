@@ -1,7 +1,7 @@
-version: '3.9'
+name: "payments"
 
 services:
-  payments-app:
+  app:
     image: ghcr.io/shoesheill/nepal.payments.gateways.demo:latest
     container_name: payments-app-demo
     ports:
