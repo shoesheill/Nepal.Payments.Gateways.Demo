@@ -7,13 +7,20 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Login to registry
-        run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login registry.sksushil.info.np -u sushil --password-stdin
+      - name: Login to self-hosted registry
+        uses: docker/login-action@v3
+        with:
+          registry: registry.sksushil.info.np
+          username: sushil
+          password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - name: Build and push image
-        run: |
-          docker build -t registry.sksushil.info.np/sample-app:latest .
-          docker push registry.sksushil.info.np/sample-app:latest
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: registry.sksushil.info.np/sample-app:latest
