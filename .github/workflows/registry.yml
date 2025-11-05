@@ -1,0 +1,19 @@
+name: Build and Push to Self-Hosted Registry
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Login to registry
+        run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login registry.sksushil.info.np -u sushil --password-stdin
+
+      - name: Build and push image
+        run: |
+          docker build -t registry.sksushil.info.np/sample-app:latest .
+          docker push registry.sksushil.info.np/sample-app:latest
